@@ -1,7 +1,9 @@
 var player, winner = null;
 var selectedPlayer = document.getElementById('jogador-selecionado');
 var selectedWinner = document.getElementById('vencedor-selecionado');
-var squares = document.getElementsByClassName('quadrado');
+
+score_x = 0;
+score_o = 0;
 
 changePlayer('X');
 
@@ -79,14 +81,19 @@ function checkTheWinner(){
     }
 
     if(checkSequence(square3, square5, square7)){
-        fillSquareColors(square1, square5, square9);
-        changeWinner(square1);
+        fillSquareColors(square3, square5, square7);
+        changeWinner(square3);
+        return;
     }
 }
 
 function changeWinner(square){
     winner = square.innerHTML;
     selectedWinner.innerHTML = winner;
+
+    winner == 'X' ? score_x++ : score_o++;
+    console.log(score_x, score_o);
+
 }
 
 function fillSquareColors(sqr1, sqr2, sqr3){
@@ -103,4 +110,18 @@ function checkSequence(square1, square2, square3){
     }
 
     return isEquals;
+}
+
+function restart(){
+    winner = null;
+    selectedWinner.innerHTML = '';
+
+    for(var i = 1; i <= 9; i++){
+        var square = document.getElementById(i);
+        square.style.background = '#eee';
+        square.style.color = '#eee';
+        square.innerHTML = '-';
+    }
+
+    changePlayer('X');
 }
